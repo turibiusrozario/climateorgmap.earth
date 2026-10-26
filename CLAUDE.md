@@ -23,7 +23,7 @@ Findings from sandbox probing (2026-10-25). Re-verify if something fails; the en
 | Tool | Status | Notes |
 |---|---|---|
 | git 2.43 | works | Local commits OK |
-| gh 2.45 | works | Logged in as `turibiusrozario`; scopes `repo`, `read:org`, `gist`; token in plain text at `~/.config/gh/hosts.yml` |
+| gh 2.45 | varies | Was logged in as `turibiusrozario` (scopes `repo`, `read:org`, `gist`); on 2026-10-25 later it reported "not logged into any GitHub hosts". Check `gh auth status` before pushing |
 | network | works | github.com, api.github.com reachable |
 | python3 3.12 | works | Local preview: `python3 -m http.server 8000`; also JSON/data generation |
 | curl, dig, openssl, rsync | work | Use `dig` / `curl` to verify DNS and the live site |
@@ -52,13 +52,18 @@ Findings from sandbox probing (2026-10-25). Re-verify if something fails; the en
 - Takeover risk: a CNAME to a `*.github.io` host whose repo drops its custom domain can be claimed by anyone. Remove DNS records for dead subdomains, and consider GitHub's Pages domain verification (account Settings > Pages, TXT record at Porkbun).
 
 ### Files
-- `index.html`: the directory page. It renders `subdomains.json` client-side; preview over `python3 -m http.server`, since `fetch` fails on `file://`.
-- `subdomains.json`: the list (`name`, `url`, `description`). Add one entry per live subdomain.
+- `index.html`: the directory page (inline CSS/JS). It renders `maps.json` + `stats.json` client-side, and does a live HEAD check of each map from the visitor's browser; preview over `python3 -m http.server`, since `fetch` fails on `file://`.
+- `maps.json`: hand-maintained list of maps (`id`, `region`, `name`, `url`, `repo`, `feedback_form`, `maintainer`, `status` = `live` to be listed, plus `feed` = Apps Script URL and `data` = fallback snapshot). Adding a map = one entry here + a DNS CNAME at Porkbun.
+- `stats.json`: written by `scripts/update_stats.py` (stdlib only; run locally with `python3 scripts/update_stats.py`). Per map: `health` (`up`/`degraded`/`down`), counts, `last_updated` (max `last_activity` in the feed; the feed's own `generated_at` is request time, so it is not used), `counts_as_of`. If no source answers, previous counts are kept.
+- `.github/workflows/stats.yml`: daily 05:17 UTC + manual + on `maps.json` change; commits `stats.json`. The token lacks `workflow` scope, so the user must push this file (`gh auth refresh -s workflow`, or the web UI).
+- `logo.svg`: 3-colour logo (ring = earth, edges = network, nodes), follows `prefers-color-scheme`; the inline copy in `index.html` follows the manual toggle too.
 - `CNAME`: `climateorgmap.earth`. Don't delete it.
+- Display prefs (theme, large print, large spacing) live in `localStorage` key `com.prefs`.
+- MA map: repo `nkessel/openthink_mycc` (Pages). Feed and `data.json` hold per-org and per-coalition `events`/`projects`/`actions`; counts are unique ids across both.
 
 ### Listing subdomains: design constraints
 - DNS cannot be enumerated (no zone transfer; wildcard records hide names). The Porkbun API needs keys that Claude doesn't have.
-- Source of truth must be a hand-maintained data file, e.g. `subdomains.json` (`name`, `url`, `description`), rendered client-side by `index.html`. Adding a subdomain is then a one-line data edit plus a DNS CNAME record at Porkbun.
+- Source of truth must be a hand-maintained data file, `maps.json`, rendered client-side by `index.html`. Adding a subdomain is then a one-line data edit plus a DNS CNAME record at Porkbun.
 - Each subdomain is a separate site, normally its own Pages repo with its own `CNAME` file. This repo only hosts the directory.
-- Optional check: a python3 script that `dig`s each listed subdomain and flags dead entries.
+- Dead entries are flagged by the daily health check in `stats.json`.
 

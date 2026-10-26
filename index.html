@@ -3,86 +3,444 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <title>Climate Org Map</title>
-  <meta name="description" content="Directory of climateorgmap.earth subdomains.">
+  <meta name="description" content="Climate Org Map is a living, interactive map of the people and organizations working to protect life on Earth, and of the coalitions, projects, events, and ideas that tie them together.">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <script>
+    // Apply saved display settings before first paint (avoids a flash of the wrong theme).
+    try {
+      var p = JSON.parse(localStorage.getItem("com.prefs") || "{}"), d = document.documentElement;
+      if (p.theme === "light" || p.theme === "dark") d.dataset.theme = p.theme;
+      if (p.text === "large") d.dataset.text = "large";
+      if (p.space === "large") d.dataset.space = "large";
+    } catch (e) {}
+  </script>
   <style>
+    /* Light is the base; dark applies when the system asks for it (unless the user chose light) or the user chose dark. */
     :root {
-      --bg: #f6f8f5;
-      --fg: #1b2a22;
-      --muted: #5d6f65;
-      --card: #ffffff;
-      --border: #d5ded8;
-      --accent: #1f7a4d;
+      color-scheme: light dark;
+      --bg: #f7f8f4;
+      --surface: #ffffff;
+      --text: #17241d;
+      --muted: #46584d;
+      --border: #c4d0c8;
+      --control: #66796d;
+      --link: #0a5d8f;
+      --accent: #17724a;
+      --on-accent: #ffffff;
+      --up: #0f6b3a;
+      --warn: #8a4b00;
+      --down: #b3261e;
+      --ring: #17724a;
+      --edge: #1d6fb0;
+      --node: #b45309;
     }
     @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #111a15;
-        --fg: #e6efe9;
-        --muted: #93a79a;
-        --card: #18241d;
-        --border: #2b3d32;
-        --accent: #5fcf94;
+      :root:not([data-theme="light"]) {
+        --bg: #0f1713;
+        --surface: #17231d;
+        --text: #e8f0ea;
+        --muted: #aebdb3;
+        --border: #34463b;
+        --control: #8a9d91;
+        --link: #8fc7f2;
+        --accent: #5fd392;
+        --on-accent: #0f1713;
+        --up: #6fdc9d;
+        --warn: #f0b45a;
+        --down: #ff8a80;
+        --ring: #5fd392;
+        --edge: #6db6ff;
+        --node: #ffb061;
       }
     }
+    :root[data-theme="light"] { color-scheme: light; }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0f1713;
+      --surface: #17231d;
+      --text: #e8f0ea;
+      --muted: #aebdb3;
+      --border: #34463b;
+      --control: #8a9d91;
+      --link: #8fc7f2;
+      --accent: #5fd392;
+      --on-accent: #0f1713;
+      --up: #6fdc9d;
+      --warn: #f0b45a;
+      --down: #ff8a80;
+      --ring: #5fd392;
+      --edge: #6db6ff;
+      --node: #ffb061;
+    }
+
+    /* Large print: 150% of the browser's own default size. Everything below is in rem. */
+    :root[data-text="large"] { font-size: 150%; }
+    /* Large spacing: the WCAG 1.4.12 text-spacing values, plus roomier layout. */
+    :root { --lh: 1.5; --gap: 1rem; --ls: normal; --ws: normal; }
+    :root[data-space="large"] { --lh: 2; --gap: 1.25rem; --ls: .12em; --ws: .16em; }
+
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 0 16px;
       background: var(--bg);
-      color: var(--fg);
-      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--text);
+      font: 1rem/var(--lh) system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      letter-spacing: var(--ls);
+      word-spacing: var(--ws);
+      overflow-wrap: break-word;
     }
-    main { max-width: 40rem; margin: 0 auto; padding: 3rem 0; }
-    h1 { margin: 0 0 .25rem; font-size: 1.75rem; }
-    .sub { margin: 0 0 2rem; color: var(--muted); }
-    ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; }
-    a.card {
-      display: block;
-      padding: 1rem 1.25rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: inherit;
-      text-decoration: none;
+    .wrap { max-width: 64rem; margin: 0 auto; padding: 0 16px; }
+    a { color: var(--link); text-underline-offset: .2em; }
+    :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+    .vh {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip-path: inset(50%); white-space: nowrap;
     }
-    a.card:hover, a.card:focus-visible { border-color: var(--accent); outline: none; }
-    .host { font-weight: 600; color: var(--accent); overflow-wrap: anywhere; }
-    .desc { color: var(--muted); }
-    #status { color: var(--muted); }
+    .skip {
+      position: absolute; left: 16px; top: -100px; z-index: 10;
+      background: var(--surface); color: var(--text); border: 2px solid var(--text);
+      padding: .5rem 1rem;
+    }
+    .skip:focus { top: 8px; }
+
+    header { padding: var(--gap) 0; border-bottom: 1px solid var(--border); }
+    header .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--gap); }
+    .brand { display: flex; align-items: center; gap: .75rem; min-width: 0; }
+    .brand svg { flex: none; width: 2.5rem; height: 2.5rem; }
+    .ring { fill: none; stroke: var(--ring); stroke-width: 5.5; }
+    .edge { fill: none; stroke: var(--edge); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+    .node { fill: var(--node); }
+    h1 { margin: 0; font-size: 1.5rem; line-height: 1.25; }
+
+    /* Display settings */
+    .settings { position: relative; }
+    .settings summary {
+      display: inline-flex; align-items: center; min-height: 2.75rem; padding: .25rem .875rem;
+      border: 2px solid var(--control); border-radius: .5rem; background: var(--surface); cursor: pointer;
+    }
+    .settings .panel {
+      margin-top: .5rem; padding: var(--gap); background: var(--surface);
+      border: 1px solid var(--control); border-radius: .5rem; display: grid; gap: var(--gap);
+    }
+    .settings fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+    .settings legend { padding: 0; font-weight: 600; }
+    .settings .opts { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+    .settings label { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; cursor: pointer; }
+    .settings input { width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--accent); }
+    @media (min-width: 40rem) {
+      .settings .panel { position: absolute; right: 0; z-index: 5; width: 20rem; max-width: calc(100vw - 32px); }
+    }
+
+    main.wrap { padding-top: calc(var(--gap) * 2); padding-bottom: calc(var(--gap) * 2); }
+    .lead { max-width: 46rem; margin: 0 0 calc(var(--gap) * 2); font-size: 1.125rem; }
+    h2 { margin: 0 0 .5rem; font-size: 1.375rem; line-height: 1.3; }
+    #summary { margin: 0 0 var(--gap); color: var(--muted); }
+
+    .maps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--gap);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+    .map {
+      background: var(--surface); border: 1px solid var(--border); border-radius: .75rem;
+      padding: calc(var(--gap) * .75); display: flex; flex-direction: column; gap: var(--gap);
+    }
+    .map h3 { margin: 0; font-size: 1.125rem; line-height: 1.3; }
+    .map p { margin: 0; }
+    .map .fullname { color: var(--muted); }
+    .status { font-weight: 600; }
+    .status .note { display: block; margin-top: .25rem; font-weight: 400; color: var(--muted); }
+    .status[data-health="up"] .label { color: var(--up); }
+    .status[data-health="degraded"] .label { color: var(--warn); }
+    .status[data-health="down"] .label { color: var(--down); }
+    .stats {
+      margin: 0; display: grid; gap: .75rem;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+    }
+    .stat { border: 1px solid var(--border); border-radius: .5rem; padding: .5rem; }
+    .stat dt { color: var(--muted); font-size: .875rem; }
+    .stat dd { margin: 0; font-size: 1.5rem; font-weight: 700; line-height: 1.3; }
+    .updated, .meta { color: var(--muted); font-size: .9375rem; }
+    .links { display: flex; flex-wrap: wrap; gap: .75rem; }
+    .btn {
+      display: inline-flex; align-items: center; min-height: 2.75rem; padding: .5rem 1rem;
+      border: 2px solid var(--control); border-radius: .5rem; color: var(--link); font-weight: 600; text-decoration: none;
+    }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+    .btn:hover { text-decoration: underline; text-underline-offset: .2em; }
+    .meta a { display: inline-block; padding: .25rem 0; }
+
+    footer { padding: var(--gap) 0 calc(var(--gap) * 2); border-top: 1px solid var(--border); color: var(--muted); font-size: .9375rem; }
+    footer p { margin: 0 0 .5rem; max-width: 46rem; }
+    noscript p { padding: var(--gap); border: 2px solid var(--control); border-radius: .5rem; background: var(--surface); }
+
+    @media print { .settings, .skip { display: none; } }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Climate Org Map</h1>
-    <p class="sub">Sites under climateorgmap.earth</p>
-    <ul id="list"></ul>
-    <p id="status">Loading…</p>
+  <a class="skip" href="#maps-h">Skip to the list of maps</a>
+
+  <header>
+    <div class="wrap">
+      <div class="brand">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <circle class="ring" cx="32" cy="32" r="26.5"/>
+          <path class="edge" d="M20 23H44L32 44.5Z"/>
+          <circle class="node" cx="20" cy="23" r="6.5"/>
+          <circle class="node" cx="44" cy="23" r="6.5"/>
+          <circle class="node" cx="32" cy="44.5" r="6.5"/>
+        </svg>
+        <h1>Climate Org Map</h1>
+      </div>
+
+      <details class="settings">
+        <summary>Display settings</summary>
+        <div class="panel">
+          <fieldset>
+            <legend>Theme</legend>
+            <div class="opts">
+              <label><input type="radio" name="theme" value="system"> System</label>
+              <label><input type="radio" name="theme" value="light"> Light</label>
+              <label><input type="radio" name="theme" value="dark"> Dark</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Text size</legend>
+            <div class="opts">
+              <label><input type="radio" name="text" value="normal"> Normal</label>
+              <label><input type="radio" name="text" value="large"> Large print</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Spacing</legend>
+            <div class="opts">
+              <label><input type="radio" name="space" value="normal"> Normal</label>
+              <label><input type="radio" name="space" value="large"> Large spacing</label>
+            </div>
+          </fieldset>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="lead">Climate Org Map is a living, interactive map of the people and organizations working to protect life on Earth, and of the coalitions, projects, events, and ideas that tie them together. Instead of a static directory, it shows the movement as a network: see who belongs to which coalition, who already works together, and who could, then zoom in to find a group’s current projects, upcoming events, and the questions it is working through in the open. Switch to the geographic view to discover what is happening near you. What began as the Massachusetts Climate Organization Map now grows to host maps beyond MA, so that coalitions everywhere can see one another and act together. Every group keeps its own entry current, so the map stays accurate and belongs to the movement it serves.</p>
+
+    <section aria-labelledby="maps-h">
+      <h2 id="maps-h" tabindex="-1">Maps</h2>
+      <p id="summary" role="status">Loading maps…</p>
+      <ul class="maps" id="maps"></ul>
+      <noscript>
+        <p>This list needs JavaScript. Without it, open the <a href="https://ma.climateorgmap.earth">Massachusetts map</a>, or read the full list in <a href="maps.json">maps.json</a>.</p>
+      </noscript>
+    </section>
   </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Figures are collected from each map’s own data feed once a day and are reported by the maps themselves. “Status” combines a check your browser makes now with the last daily check of the data feed.</p>
+      <p><a href="https://github.com/turibiusrozario/climateorgmap.earth">Source on GitHub</a> · <a href="maps.json">maps.json</a> · <a href="stats.json">stats.json</a></p>
+    </div>
+  </footer>
+
   <script>
-    const list = document.getElementById("list");
-    const status = document.getElementById("status");
-    fetch("subdomains.json", { cache: "no-cache" })
-      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(items => {
-        if (!items.length) { status.textContent = "No subdomains yet."; return; }
-        status.remove();
-        for (const s of items) {
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.className = "card";
-          a.href = s.url;
-          const host = document.createElement("div");
-          host.className = "host";
-          host.textContent = new URL(s.url).host;
-          const desc = document.createElement("div");
-          desc.className = "desc";
-          desc.textContent = s.description || "";
-          a.append(host, desc);
-          li.append(a);
-          list.append(li);
+    (function () {
+      "use strict";
+
+      /* ---------- Display settings ---------- */
+      var root = document.documentElement;
+      var prefs = { theme: "system", text: "normal", space: "normal" };
+      try { Object.assign(prefs, JSON.parse(localStorage.getItem("com.prefs") || "{}")); } catch (e) {}
+
+      function applyPrefs() {
+        if (prefs.theme === "light" || prefs.theme === "dark") root.dataset.theme = prefs.theme;
+        else delete root.dataset.theme;
+        if (prefs.text === "large") root.dataset.text = "large"; else delete root.dataset.text;
+        if (prefs.space === "large") root.dataset.space = "large"; else delete root.dataset.space;
+      }
+      document.querySelectorAll(".settings input[type=radio]").forEach(function (input) {
+        input.checked = prefs[input.name] === input.value;
+        input.addEventListener("change", function () {
+          prefs[input.name] = input.value;
+          applyPrefs();
+          try { localStorage.setItem("com.prefs", JSON.stringify(prefs)); } catch (e) {}
+        });
+      });
+
+      /* ---------- Helpers ---------- */
+      function el(tag, props) {
+        var node = document.createElement(tag);
+        Object.keys(props || {}).forEach(function (k) {
+          if (k === "text") node.textContent = props[k]; else node.setAttribute(k, props[k]);
+        });
+        for (var i = 2; i < arguments.length; i++) {
+          var c = arguments[i];
+          if (c != null) node.append(c);
         }
-      })
-      .catch(() => { status.textContent = "Could not load the subdomain list."; });
+        return node;
+      }
+      function safeUrl(u) {
+        try {
+          var x = new URL(u, location.href);
+          return x.protocol === "https:" || x.protocol === "http:" ? x.href : null;
+        } catch (e) { return null; }
+      }
+      function fmtDate(iso) {
+        var d = new Date(iso);
+        if (isNaN(d)) return null;
+        return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+      }
+      function fmtDateTime(iso) {
+        var d = new Date(iso);
+        if (isNaN(d)) return null;
+        return d.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+      }
+      function timeEl(iso, text) { return el("time", { datetime: iso, text: text }); }
+      function getJSON(url) {
+        return fetch(url, { cache: "no-cache" }).then(function (r) {
+          if (!r.ok) throw new Error(url + " " + r.status);
+          return r.json();
+        });
+      }
+
+      /* Live reachability check from the visitor's browser. true / false / null (unknown, e.g. offline). */
+      function ping(url) {
+        if (navigator.onLine === false) return Promise.resolve(null);
+        var ctl = new AbortController();
+        var timer = setTimeout(function () { ctl.abort(); }, 8000);
+        var opts = { method: "HEAD", cache: "no-store", signal: ctl.signal };
+        return fetch(url, Object.assign({ mode: "cors" }, opts))
+          .then(function (r) { return r.status < 400; })
+          .catch(function () {
+            // CORS may hide the response; an opaque reply still proves the host answered.
+            return fetch(url, Object.assign({ mode: "no-cors" }, opts)).then(function () { return true; });
+          })
+          .catch(function () { return false; })
+          .then(function (v) { clearTimeout(timer); return v; });
+      }
+
+      /* ---------- Rendering ---------- */
+      var STATUS = {
+        up: { icon: "✔", label: "Up" },
+        degraded: { icon: "▲", label: "Partly down" },
+        down: { icon: "✖", label: "Down" },
+        unknown: { icon: "?", label: "Unknown" }
+      };
+
+      function statusNode(nightly, live) {
+        // live: true/false/null from this browser; nightly: stats entry or undefined.
+        var site = live !== null && live !== undefined ? live : (nightly ? nightly.site.ok : null);
+        var feed = nightly && nightly.feed ? nightly.feed.ok : null;
+        var health = site === null ? "unknown" : !site ? "down" : feed === false ? "degraded" : "up";
+        var checked = nightly && fmtDateTime(nightly.checked_at);
+        var parts = [];
+        if (live === true) parts.push("The map responded to your browser just now.");
+        else if (live === false) parts.push("The map did not respond to your browser just now.");
+        else if (nightly) parts.push("The map " + (nightly.site.ok ? "responded" : "did not respond") + " at the daily check.");
+        if (nightly && feed === true) parts.push("Its data feed responded at the daily check (" + checked + ").");
+        else if (nightly && feed === false) parts.push("Its data feed did not respond at the daily check (" + checked + "); figures may be out of date.");
+        if (!nightly) parts.push("No daily check is available yet.");
+        var s = STATUS[health];
+        var node = el("p", { "class": "status", "data-health": health },
+          "Status: ",
+          el("span", { "aria-hidden": "true", text: s.icon + " " }),
+          el("span", { "class": "label", text: s.label }),
+          el("span", { "class": "note", text: parts.join(" ") }));
+        node.healthKey = health;
+        return node;
+      }
+
+      function statTile(label, value) {
+        var dd = el("dd");
+        if (typeof value === "number") dd.textContent = value.toLocaleString();
+        else dd.append(el("span", { "aria-hidden": "true", text: "—" }), el("span", { "class": "vh", text: "not available" }));
+        return el("div", { "class": "stat" }, el("dt", { text: label }), dd);
+      }
+
+      function renderMap(m, nightly) {
+        var id = "map-" + m.id;
+        var url = safeUrl(m.url), form = safeUrl(m.feedback_form), repo = safeUrl(m.repo);
+        var card = el("li", { "class": "map" });
+        card.append(
+          el("h3", { id: id + "-h", text: m.region }),
+          m.name ? el("p", { "class": "fullname", text: m.name }) : null
+        );
+        card.statusSlot = el("div");
+        card.statusSlot.append(statusNode(nightly, undefined));
+        card.append(card.statusSlot);
+
+        var n = nightly || {};
+        card.append(el("dl", { "class": "stats" },
+          statTile("Organizations", n.organizations),
+          statTile("Events", n.events),
+          statTile("Projects", n.projects),
+          statTile("Actions", n.actions)));
+
+        var upd = n.last_updated && fmtDate(n.last_updated);
+        card.append(el("p", { "class": "updated" },
+          "Last updated, as reported by the map: ",
+          upd ? timeEl(n.last_updated, upd) : "not available"));
+
+        var links = el("p", { "class": "links" });
+        if (url) links.append(el("a", { "class": "btn primary", href: url },
+          "Open map", el("span", { "class": "vh", text: ": " + m.region })));
+        if (form) links.append(el("a", { "class": "btn", href: form },
+          "Contact: feedback form", el("span", { "class": "vh", text: " for the " + m.region + " map" })));
+        card.append(links);
+
+        var meta = el("p", { "class": "meta" });
+        if (m.maintainer && m.maintainer.name) {
+          var gh = m.maintainer.github && safeUrl("https://github.com/" + encodeURIComponent(m.maintainer.github));
+          meta.append("Maintainer: ", gh ? el("a", { href: gh, text: m.maintainer.name }) : m.maintainer.name);
+        }
+        if (repo) meta.append(meta.childNodes.length ? " · " : "", el("a", { href: repo, text: "Source code" }));
+        if (meta.childNodes.length) card.append(meta);
+
+        return card;
+      }
+
+      function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
+
+      Promise.all([
+        getJSON("maps.json"),
+        getJSON("stats.json").catch(function () { return null; })
+      ]).then(function (res) {
+        var maps = res[0].filter(function (m) { return m.status === "live"; })
+          .sort(function (a, b) { return a.region.localeCompare(b.region); });
+        var stats = res[1];
+        var list = document.getElementById("maps");
+        var summary = document.getElementById("summary");
+
+        if (!maps.length) { summary.textContent = "No maps are listed yet."; return; }
+        var cards = maps.map(function (m) {
+          var c = renderMap(m, stats && stats.maps && stats.maps[m.id]);
+          list.append(c);
+          return c;
+        });
+        summary.textContent = plural(maps.length, "map", "maps") + " listed. Checking which are up…";
+
+        var stale = "";
+        if (stats && stats.generated_at) {
+          var age = Date.now() - new Date(stats.generated_at).getTime();
+          if (age > 36 * 3600 * 1000) stale = " The daily figures were last refreshed " + fmtDate(stats.generated_at) + "; the refresh may be failing.";
+        } else {
+          stale = " Daily figures are not available right now.";
+        }
+
+        Promise.all(maps.map(function (m, i) {
+          return ping(m.url).then(function (live) {
+            var slot = cards[i].statusSlot;
+            var node = statusNode(stats && stats.maps && stats.maps[m.id], live);
+            slot.replaceChildren(node);
+            return node.healthKey;
+          });
+        })).then(function (healths) {
+          var up = healths.filter(function (h) { return h === "up"; }).length;
+          summary.textContent = plural(maps.length, "map", "maps") + " listed, " + up + " up." + stale;
+        });
+      }).catch(function () {
+        document.getElementById("summary").textContent = "The list of maps could not be loaded. Try again later, or read maps.json directly.";
+      });
+    })();
   </script>
 </body>
 </html>

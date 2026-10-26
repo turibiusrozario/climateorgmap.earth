@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ma",
+    "region": "Massachusetts",
+    "name": "MA Climate Organization Map (MACOM)",
+    "url": "https://ma.climateorgmap.earth",
+    "repo": "https://github.com/nkessel/openthink_mycc",
+    "feedback_form": "https://docs.google.com/forms/d/e/1FAIpQLScwazw1P9rbQT4KAoUn0DSuI6B9Lpdx-kcrZXdZV45-HlAVKw/viewform",
+    "maintainer": { "name": "Nathan Kessel", "github": "nkessel" },
+    "status": "live",
+    "feed": "https://script.google.com/macros/s/AKfycbwj2109KXf2Ndv-0ZCHp0a6MH3aVSejxkqofBOfOFHRSvMi61DXjkeIe25OlsHNbs5S/exec",
+    "data": "https://ma.climateorgmap.earth/data.json"
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-10-26T00:36:24Z",
+  "maps": {
+    "ma": {
+      "checked_at": "2026-10-26T00:36:24Z",
+      "site": {
+        "ok": true,
+        "http": 200
+      },
+      "feed": {
+        "ok": true
+      },
+      "source": "feed",
+      "organizations": 150,
+      "coalitions": 8,
+      "events": 121,
+      "projects": 156,
+      "actions": 68,
+      "last_updated": "2026-10-14T21:40:44.995Z",
+      "feed_generated_at": "2026-10-26T00:36:31.707Z",
+      "counts_as_of": "2026-10-26T00:36:24Z",
+      "health": "up"
+    }
+  }
+}

@@ -32,7 +32,7 @@ Findings from sandbox probing (2026-10-25). Re-verify if something fails; the en
 | whois | missing | Not needed |
 
 ### Git setup (repo-local, no `~/.gitconfig` exists)
-- `user.name` = model name + version + effort (e.g. `Sonnet 5.5 Low`); update it if the model or effort changes.
+- `user.name` = model name + version + effort (e.g. `Sonnet 5.5 High`); the user states the effort level, since Claude can't read it. Update it if the model or effort changes.
 - `user.email` = `80226974+turibiusrozario@users.noreply.github.com`.
 - `credential.helper` = `!gh auth git-credential`. Without it, HTTPS push fails ("could not read Username").
 - Commit messages end with the `Co-Authored-By: Claude ...` trailer given by the harness.
@@ -45,7 +45,15 @@ Findings from sandbox probing (2026-10-25). Re-verify if something fails; the en
   - AAAA: `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
 - The repo needs a `CNAME` file at the root containing exactly `climateorgmap.earth`.
 - After DNS propagates: enable Pages (source `main`, `/`), set the custom domain, then tick "Enforce HTTPS" (the certificate can take up to about an hour). Pages can be enabled via `gh api -X POST repos/turibiusrozario/climateorgmap.earth/pages`.
-- As of 2026-10-25 the apex has no A record in the sandbox's resolver, so the site is not live yet.
+- Other records the user set at Porkbun: `www` CNAME `turibiusrozario.github.io` (correct: GitHub redirects www to the apex once the apex is the custom domain), and `ma` CNAME `nkessel.github.io`.
+- As of 2026-10-25 the apex A/AAAA are live at 1.1.1.1, 8.8.8.8 and Porkbun's nameserver. The sandbox's default resolver cached a stale negative answer, so use `dig @1.1.1.1` when checking.
+- Live subdomains: only `ma` (https://ma.climateorgmap.earth, "MA Climate Organization Map (MACOM)"), hosted by another GitHub user's Pages repo (`nkessel`), not by this repo.
+- Takeover risk: a CNAME to a `*.github.io` host whose repo drops its custom domain can be claimed by anyone. Remove DNS records for dead subdomains, and consider GitHub's Pages domain verification (account Settings > Pages, TXT record at Porkbun).
+
+### Files
+- `index.html`: the directory page. It renders `subdomains.json` client-side; preview over `python3 -m http.server`, since `fetch` fails on `file://`.
+- `subdomains.json`: the list (`name`, `url`, `description`). Add one entry per live subdomain.
+- `CNAME`: `climateorgmap.earth`. Don't delete it.
 
 ### Listing subdomains: design constraints
 - DNS cannot be enumerated (no zone transfer; wildcard records hide names). The Porkbun API needs keys that Claude doesn't have.

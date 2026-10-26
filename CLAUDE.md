@@ -47,6 +47,7 @@ Findings from sandbox probing (2026-10-25). Re-verify if something fails; the en
 - After DNS propagates: enable Pages (source `main`, `/`), set the custom domain, then tick "Enforce HTTPS" (the certificate can take up to about an hour). Pages can be enabled via `gh api -X POST repos/turibiusrozario/climateorgmap.earth/pages`.
 - Other records the user set at Porkbun: `www` CNAME `turibiusrozario.github.io` (correct: GitHub redirects www to the apex once the apex is the custom domain), and `ma` CNAME `nkessel.github.io`.
 - As of 2026-10-25 the apex A/AAAA are live at 1.1.1.1, 8.8.8.8 and Porkbun's nameserver. The sandbox's default resolver cached a stale negative answer, so use `dig @1.1.1.1` when checking.
+- Pages enabled 2026-10-25 (source `main` `/`, custom domain `climateorgmap.earth`, cert approved through 2027-01-23, HTTPS enforced). `www` 301-redirects to the apex. To redeploy, push to `main`; builds take under a minute.
 - Live subdomains: only `ma` (https://ma.climateorgmap.earth, "MA Climate Organization Map (MACOM)"), hosted by another GitHub user's Pages repo (`nkessel`), not by this repo.
 - Takeover risk: a CNAME to a `*.github.io` host whose repo drops its custom domain can be claimed by anyone. Remove DNS records for dead subdomains, and consider GitHub's Pages domain verification (account Settings > Pages, TXT record at Porkbun).
 

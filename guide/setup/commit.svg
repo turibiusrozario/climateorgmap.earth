@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="720" height="360" role="img" aria-label="GitHub: Commit changes, directly to the main branch">
+<rect x="0.5" y="0.5" width="719" height="359" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+<text x="24" y="38" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#1f2328" text-anchor="start">wi-climate-map / map.config.ts</text>
+<text x="262" y="38" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#59636e" text-anchor="start">in</text>
+<rect x="282" y="22" width="52" height="24" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="294" y="39" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" font-weight="400" fill="#1f2328" text-anchor="start" xml:space="preserve">main</text>
+<rect x="430" y="18" width="127.92000000000002" height="30" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="493.96000000000004" y="37.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">Cancel changes</text>
+<rect x="565.9200000000001" y="18" width="135.20000000000002" height="30" rx="6" fill="#1f883d" stroke="#1f883d" stroke-width="1"/>
+<text x="633.5200000000001" y="37.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#fff" text-anchor="middle">Commit changes…</text>
+<rect x="559.9200000000001" y="12" width="147.20000000000002" height="42" rx="8" fill="none" stroke="#d9480f" stroke-width="3"/>
+<rect x="130" y="72" width="480" height="268" rx="10" fill="#fff" stroke="#8c959f" stroke-width="1"/>
+<text x="152" y="104" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#1f2328" text-anchor="start">Commit changes</text>
+<text x="588" y="104" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="18" font-weight="400" fill="#59636e" text-anchor="end">×</text>
+<text x="152" y="136" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328" text-anchor="start">Commit message</text>
+<rect x="152" y="144" width="436" height="30" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1"/>
+<text x="162" y="164" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">Update map.config.ts</text>
+<text x="152" y="196" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#59636e" text-anchor="start">Extended description</text>
+<rect x="152" y="204" width="436" height="26" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1"/>
+<circle cx="164" cy="252" r="7.5" fill="#fff" stroke="#0969da" stroke-width="4.5"/>
+<text x="182" y="257" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328" text-anchor="start">Commit directly to the main branch</text>
+<rect x="148" y="236" width="290" height="32" rx="8" fill="none" stroke="#d9480f" stroke-width="3"/>
+<text x="448" y="256.5" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#d9480f" text-anchor="start">this one</text>
+<circle cx="164" cy="284" r="7.5" fill="#fff" stroke="#8c959f" stroke-width="1"/>
+<text x="182" y="289" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#59636e" text-anchor="start">Create a new branch for this commit and start a pull request</text>
+<rect x="398" y="302" width="69.68" height="30" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="432.84000000000003" y="321.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">Cancel</text>
+<rect x="470" y="302" width="127.92000000000002" height="30" rx="6" fill="#1f883d" stroke="#1f883d" stroke-width="1"/>
+<text x="533.96" y="321.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#fff" text-anchor="middle">Commit changes</text>
+<rect x="464" y="296" width="139.92000000000002" height="42" rx="8" fill="none" stroke="#d9480f" stroke-width="3"/>
+<circle cx="559.9200000000001" cy="12" r="11" fill="#d9480f"/><text x="559.9200000000001" y="16.5" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text><circle cx="148" cy="236" r="11" fill="#d9480f"/><text x="148" y="240.5" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">2</text><circle cx="464" cy="296" r="11" fill="#d9480f"/><text x="464" y="300.5" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+<text x="708" y="351" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" fill="#8c959f" text-anchor="end">Simplified drawing, not a screenshot</text>
+</svg>

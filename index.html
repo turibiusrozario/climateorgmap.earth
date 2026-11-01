@@ -168,6 +168,9 @@
     .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
     .btn:hover { text-decoration: underline; text-underline-offset: .2em; }
     .meta a { display: inline-block; padding: .25rem 0; }
+    h2.own { margin-top: calc(var(--gap) * 3); }
+    .own-text { max-width: 46rem; margin: 0 0 var(--gap); }
+    code { padding: .1em .35em; border-radius: .25rem; background: var(--border); font: .9375em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
     footer { padding: var(--gap) 0 calc(var(--gap) * 2); border-top: 1px solid var(--border); color: var(--muted); font-size: .9375rem; }
     footer p { margin: 0 0 .5rem; max-width: 46rem; }
@@ -232,6 +235,12 @@
       <noscript>
         <p>This list needs JavaScript. Without it, open the <a href="https://ma.climateorgmap.earth">Massachusetts map</a>, or read the full list in <a href="maps.json">maps.json</a>.</p>
       </noscript>
+    </section>
+
+    <section aria-labelledby="own-h">
+      <h2 id="own-h" class="own">Make your own map</h2>
+      <p class="own-text">Start a map for your state or region, free, in about 15 minutes. Then request a <code>yourstate.climateorgmap.earth</code> address: fill in the <a href="https://forms.gle/1gS3FvUfXBEd3iXr6">request form</a> and wait for next steps.</p>
+      <p class="links"><a class="btn primary" href="guide/">Guide: create your own map</a></p>
     </section>
   </main>
 

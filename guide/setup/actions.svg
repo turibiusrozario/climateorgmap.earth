@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 230" width="720" height="230" role="img" aria-label="GitHub: enable Actions in the fork">
+<rect x="0.5" y="0.5" width="719" height="229" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+<text x="24" y="36" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">&lt;&gt; Code</text>
+<text x="100.88" y="36" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Issues</text>
+<text x="169.92000000000002" y="36" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Pull requests</text>
+<text x="293.84000000000003" y="36" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">Actions</text>
+<line x1="287.84000000000003" y1="50" x2="354.72" y2="50" stroke="#fd8c73" stroke-width="2.5"/>
+<rect x="283.84000000000003" y="18" width="74.88" height="30" rx="8" fill="none" stroke="#d9480f" stroke-width="3"/>
+<text x="370.72" y="36" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Projects</text>
+<text x="455.44000000000005" y="36" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Security</text>
+<text x="540.1600000000001" y="36" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Insights</text>
+<circle cx="632.8800000000001" cy="32" r="5.5" fill="none" stroke="#59636e" stroke-width="2.6" stroke-dasharray="2.6 1.7"/><circle cx="632.8800000000001" cy="32" r="2" fill="#59636e"/>
+<text x="644.8800000000001" y="36" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Settings</text>
+<line x1="0" y1="51" x2="720" y2="51" stroke="#d0d7de" stroke-width="1"/>
+<rect x="24" y="72" width="672" height="124" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="48" y="104" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="600" fill="#1f2328" text-anchor="start">Workflows aren’t being run on this forked repository</text>
+<text x="48" y="128" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#59636e" text-anchor="start">Because this repository contained workflow files when it was forked, we have disabled them…</text>
+<rect x="48" y="148" width="397.28000000000003" height="30" rx="6" fill="#1f883d" stroke="#1f883d" stroke-width="1"/>
+<text x="246.64000000000001" y="167.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#fff" text-anchor="middle">I understand my workflows, go ahead and enable them</text>
+<rect x="42" y="142" width="409.28000000000003" height="42" rx="8" fill="none" stroke="#d9480f" stroke-width="3"/>
+<circle cx="283.84000000000003" cy="18" r="11" fill="#d9480f"/><text x="283.84000000000003" y="22.5" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text><circle cx="42" cy="142" r="11" fill="#d9480f"/><text x="42" y="146.5" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+<text x="708" y="221" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" fill="#8c959f" text-anchor="end">Simplified drawing, not a screenshot</text>
+</svg>

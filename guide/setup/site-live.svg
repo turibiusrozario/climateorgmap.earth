@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 170" width="720" height="170" role="img" aria-label="GitHub: Settings, Pages, Your site is live">
+<rect x="0.5" y="0.5" width="719" height="169" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+<text x="24" y="40" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#1f2328" text-anchor="start">GitHub Pages</text>
+<rect x="24" y="58" width="672" height="56" rx="6" fill="#dafbe1" stroke="#aceebb" stroke-width="1"/>
+<text x="42" y="92" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="600" fill="#1f2328" text-anchor="start">Your site is live at https://your-name.github.io/wi-climate-map/</text>
+<rect x="560" y="71" width="113.36000000000001" height="30" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="616.6800000000001" y="90.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">↗ Visit site</text>
+<rect x="554" y="65" width="125.36000000000001" height="42" rx="8" fill="none" stroke="#d9480f" stroke-width="3"/>
+<text x="24" y="142" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#d9480f" text-anchor="start">Then add  setup.html  to the end of the address: …/wi-climate-map/setup.html</text>
+<circle cx="554" cy="65" r="11" fill="#d9480f"/><text x="554" y="69.5" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+<text x="708" y="161" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" fill="#8c959f" text-anchor="end">Simplified drawing, not a screenshot</text>
+</svg>

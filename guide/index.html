@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Create your own map · Climate Org Map</title>
+  <meta name="description" content="Step-by-step guide to start a climate organization map for your state or region, free, in about 15 minutes, and how to request a climateorgmap.earth address.">
+  <link rel="icon" href="../logo.svg" type="image/svg+xml">
+  <script>
+    // Apply saved display settings before first paint (avoids a flash of the wrong theme).
+    try {
+      var p = JSON.parse(localStorage.getItem("com.prefs") || "{}"), d = document.documentElement;
+      if (p.theme === "light" || p.theme === "dark") d.dataset.theme = p.theme;
+      if (p.text === "large") d.dataset.text = "large";
+      if (p.space === "large") d.dataset.space = "large";
+    } catch (e) {}
+  </script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f8f4;
+      --surface: #ffffff;
+      --text: #17241d;
+      --muted: #46584d;
+      --border: #c4d0c8;
+      --control: #66796d;
+      --link: #0a5d8f;
+      --accent: #17724a;
+      --on-accent: #ffffff;
+      --code: #eef2ec;
+      --ring: #17724a;
+      --edge: #1d6fb0;
+      --node: #b45309;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f1713;
+        --surface: #17231d;
+        --text: #e8f0ea;
+        --muted: #aebdb3;
+        --border: #34463b;
+        --control: #8a9d91;
+        --link: #8fc7f2;
+        --accent: #5fd392;
+        --on-accent: #0f1713;
+        --code: #1f2f26;
+        --ring: #5fd392;
+        --edge: #6db6ff;
+        --node: #ffb061;
+      }
+    }
+    :root[data-theme="light"] { color-scheme: light; }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0f1713;
+      --surface: #17231d;
+      --text: #e8f0ea;
+      --muted: #aebdb3;
+      --border: #34463b;
+      --control: #8a9d91;
+      --link: #8fc7f2;
+      --accent: #5fd392;
+      --on-accent: #0f1713;
+      --code: #1f2f26;
+      --ring: #5fd392;
+      --edge: #6db6ff;
+      --node: #ffb061;
+    }
+
+    :root[data-text="large"] { font-size: 150%; }
+    :root { --lh: 1.5; --gap: 1rem; --ls: normal; --ws: normal; }
+    :root[data-space="large"] { --lh: 2; --gap: 1.25rem; --ls: .12em; --ws: .16em; }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 1rem/var(--lh) system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      letter-spacing: var(--ls);
+      word-spacing: var(--ws);
+      overflow-wrap: break-word;
+    }
+    .wrap { max-width: 64rem; margin: 0 auto; padding: 0 16px; }
+    a { color: var(--link); text-underline-offset: .2em; }
+    :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+    .skip {
+      position: absolute; left: 16px; top: -100px; z-index: 10;
+      background: var(--surface); color: var(--text); border: 2px solid var(--text);
+      padding: .5rem 1rem;
+    }
+    .skip:focus { top: 8px; }
+
+    header { padding: var(--gap) 0; border-bottom: 1px solid var(--border); }
+    header .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--gap); }
+    .brand { display: flex; align-items: center; gap: .75rem; min-width: 0; color: inherit; text-decoration: none; }
+    .brand svg { flex: none; width: 2.5rem; height: 2.5rem; }
+    .ring { fill: none; stroke: var(--ring); stroke-width: 5.5; }
+    .edge { fill: none; stroke: var(--edge); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+    .node { fill: var(--node); }
+    .brand span { font-size: 1.5rem; font-weight: 700; line-height: 1.25; }
+
+    .settings { position: relative; }
+    .settings summary {
+      display: inline-flex; align-items: center; min-height: 2.75rem; padding: .25rem .875rem;
+      border: 2px solid var(--control); border-radius: .5rem; background: var(--surface); cursor: pointer;
+    }
+    .settings .panel {
+      margin-top: .5rem; padding: var(--gap); background: var(--surface);
+      border: 1px solid var(--control); border-radius: .5rem; display: grid; gap: var(--gap);
+    }
+    .settings fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+    .settings legend { padding: 0; font-weight: 600; }
+    .settings .opts { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+    .settings label { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; cursor: pointer; }
+    .settings input { width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--accent); }
+    @media (min-width: 40rem) {
+      .settings .panel { position: absolute; right: 0; z-index: 5; width: 20rem; max-width: calc(100vw - 32px); }
+    }
+
+    main.wrap { padding-top: calc(var(--gap) * 2); padding-bottom: calc(var(--gap) * 2); }
+    .crumb { margin: 0 0 var(--gap); }
+    h1 { margin: 0 0 var(--gap); font-size: 1.875rem; line-height: 1.25; }
+    h2 { margin: calc(var(--gap) * 2.5) 0 .5rem; font-size: 1.5rem; line-height: 1.3; }
+    h3 { margin: calc(var(--gap) * 1.5) 0 .5rem; font-size: 1.1875rem; line-height: 1.3; }
+    h2 .time, h3 .time { color: var(--muted); font-size: 1rem; font-weight: 400; }
+    .prose { max-width: 46rem; }
+    .prose p, .prose ul, .prose ol { margin: 0 0 var(--gap); }
+    .prose li { margin-bottom: .75rem; }
+    .prose li > p { margin-bottom: .5rem; }
+    .prose img { display: block; max-width: 100%; height: auto; margin: var(--gap) 0; border: 1px solid var(--border); border-radius: .5rem; }
+    code { padding: .1em .35em; border-radius: .25rem; background: var(--code); font: .9375em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .lead { font-size: 1.125rem; }
+    .note {
+      padding: var(--gap); border: 1px solid var(--border); border-left: 6px solid var(--accent);
+      border-radius: .5rem; background: var(--surface);
+    }
+    .note > :last-child { margin-bottom: 0; }
+
+    .tablewrap { overflow-x: auto; margin: 0 0 var(--gap); }
+    table { border-collapse: collapse; width: 100%; background: var(--surface); }
+    th, td { padding: .5rem .75rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { background: var(--code); }
+
+    .btn {
+      display: inline-flex; align-items: center; min-height: 2.75rem; padding: .5rem 1rem;
+      border: 2px solid var(--accent); border-radius: .5rem; background: var(--accent); color: var(--on-accent);
+      font-weight: 600; text-decoration: none;
+    }
+    .btn:hover { text-decoration: underline; text-underline-offset: .2em; }
+
+    footer { padding: var(--gap) 0 calc(var(--gap) * 2); border-top: 1px solid var(--border); color: var(--muted); font-size: .9375rem; }
+    footer p { margin: 0 0 .5rem; max-width: 46rem; }
+
+    @media print { .settings, .skip { display: none; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#guide">Skip to the guide</a>
+
+  <header>
+    <div class="wrap">
+      <a class="brand" href="../">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <circle class="ring" cx="32" cy="32" r="26.5"/>
+          <path class="edge" d="M20 23H44L32 44.5Z"/>
+          <circle class="node" cx="20" cy="23" r="6.5"/>
+          <circle class="node" cx="44" cy="23" r="6.5"/>
+          <circle class="node" cx="32" cy="44.5" r="6.5"/>
+        </svg>
+        <span>Climate Org Map</span>
+      </a>
+
+      <details class="settings">
+        <summary>Display settings</summary>
+        <div class="panel">
+          <fieldset>
+            <legend>Theme</legend>
+            <div class="opts">
+              <label><input type="radio" name="theme" value="system"> System</label>
+              <label><input type="radio" name="theme" value="light"> Light</label>
+              <label><input type="radio" name="theme" value="dark"> Dark</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Text size</legend>
+            <div class="opts">
+              <label><input type="radio" name="text" value="normal"> Normal</label>
+              <label><input type="radio" name="text" value="large"> Large print</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Spacing</legend>
+            <div class="opts">
+              <label><input type="radio" name="space" value="normal"> Normal</label>
+              <label><input type="radio" name="space" value="large"> Large spacing</label>
+            </div>
+          </fieldset>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main class="wrap" id="guide" tabindex="-1">
+    <p class="crumb"><a href="../">← All maps</a></p>
+    <h1>Create your own map</h1>
+
+    <div class="prose">
+      <p class="lead">Start a climate organization map for your state or region: a network map of coalitions and the groups in them, a geographic map, and lists of events, projects and actions. Point people keep their own group’s information current through Google Forms; your core team approves everything else. It’s the code behind the <a href="https://ma.climateorgmap.earth">MA Climate Organization Map</a>, with Massachusetts taken out.</p>
+
+      <p>Everything is free: the site runs on GitHub Pages, the data lives in your Google Sheet, and the forms are Google Forms that the sheet builds for you. <strong>You edit one file, <a href="https://github.com/turibiusrozario-tutorials/template.climateorgmap.earth/blob/main/map.config.ts"><code>map.config.ts</code></a>.</strong></p>
+
+      <p>Want a <code>yourstate.climateorgmap.earth</code> address? See <a href="#address">Get a climateorgmap.earth address</a>. Your map works without one, at its GitHub Pages address.</p>
+    </div>
+
+    <h2 id="start">Start your own map <span class="time">(about 15 minutes)</span></h2>
+
+    <div class="prose">
+      <p>You need a GitHub account (not the one that owns the <a href="https://github.com/turibiusrozario-tutorials/template.climateorgmap.earth">template</a>: nobody can fork their own repo) and a Google account that should own the map’s sheet (ideally a shared team account: see <a href="#owners">Who owns what</a>). Everything happens in the browser. The drawings below are simplified; the numbered circles are the order to click in.</p>
+
+      <p><strong>Waiting:</strong> about 5 minutes of the 15, at these points (⏳ in the steps):</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Wait</th><th scope="col">When</th><th scope="col">How long</th><th scope="col">How you know it’s done</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Site build</th><td>after steps 4 and 10</td><td>about 2 minutes each</td><td><strong>Actions</strong> tab: yellow dot = running, green ✓ = done</td></tr>
+          <tr><th scope="row">Your map’s menu</th><td>step 8, after reloading the sheet</td><td>5–10 seconds</td><td>a <strong>Climate Organization Map</strong> menu appears after <strong>Help</strong></td></tr>
+          <tr><th scope="row">Setup script</th><td>step 8</td><td>1–3 minutes</td><td>a popup “Built and shared with the core team…”</td></tr>
+          <tr><th scope="row">A form submission</th><td>step 11</td><td>about 1 minute</td><td>it shows on the map after a reload</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="on-github">On GitHub <span class="time">(about 4 minutes)</span></h3>
+
+    <div class="prose">
+      <ol>
+        <li>
+          <p><strong>Fork.</strong> On the <a href="https://github.com/turibiusrozario-tutorials/template.climateorgmap.earth">template’s page</a>, click <strong>Fork</strong> (top right, between Watch and Star). Name it (e.g. <code>wi-climate-map</code>), leave <strong>Copy the main branch only</strong> ticked, click <strong>Create fork</strong>.</p>
+          <img src="setup/fork.svg" width="620" alt="The Create a new fork page: 1 repository name, 2 Copy the main branch only stays ticked, 3 Create fork">
+        </li>
+        <li>
+          <p><strong>Turn on Actions.</strong> In your fork, click the <strong>Actions</strong> tab (the bar under the repo name) → <strong>I understand my workflows, go ahead and enable them</strong>.</p>
+          <img src="setup/actions.svg" width="620" alt="The Actions tab of a fork: 1 Actions, 2 the green enable button">
+        </li>
+        <li>
+          <p><strong>Turn on Pages.</strong> <strong>Settings</strong> (same bar, far right, gear icon) → <strong>Pages</strong> (left menu, under “Code and automation”) → <strong>Source</strong>: choose <strong>GitHub Actions</strong>. It saves by itself.</p>
+          <img src="setup/pages.svg" width="620" alt="Settings, then Pages, then Source set to GitHub Actions">
+        </li>
+        <li>
+          <p><strong>Name your map.</strong> Click the <strong>Code</strong> tab, then <code>map.config.ts</code> in the file list. Click the <strong>pencil icon</strong> at the top right of the file (“Edit this file”).</p>
+          <img src="setup/edit.svg" width="620" alt="A file on GitHub: 1 the pencil icon at the top right edits it">
+          <p>Change <code>title</code> (e.g. <code>"WI Climate Organization Map"</code>) and <code>state</code> (e.g. <code>"WI"</code>), and replace the line <code>[Write your land acknowledgement here …]</code> with yours (keep the backticks around it). Then click <strong>Commit changes…</strong> (green, top right), choose <strong>Commit directly to the main branch</strong>, and click <strong>Commit changes</strong>.</p>
+          <img src="setup/commit.svg" width="620" alt="1 Commit changes, 2 Commit directly to the main branch, 3 Commit changes">
+          <p>⏳ Your site now builds (about 2 minutes). Don’t wait: go on with step 5.</p>
+        </li>
+      </ol>
+    </div>
+
+    <h3 id="in-google">In Google <span class="time">(about 6 minutes)</span></h3>
+
+    <div class="prose">
+      <ol start="5">
+        <li>
+          <p><strong>Make the sheet.</strong> Open <a href="https://sheets.new">sheets.new</a> (a blank Google Sheet) and name it: click “Untitled spreadsheet” at the top left, e.g. “WI Climate Organization Map data”.</p>
+        </li>
+        <li>
+          <p><strong>Open your map’s setup checklist:</strong> <code>https://&lt;your-github-name&gt;.github.io/&lt;repo-name&gt;/setup.html</code>. Or: <strong>Settings → Pages → Visit site</strong> and click <strong>Open the setup checklist</strong> in the note on the map. (Not there yet? The build from step 4 is still running: wait for the green ✓ on the <strong>Actions</strong> tab.) Keep this page open: it checks each step.</p>
+          <img src="setup/site-live.svg" width="620" alt="Settings, Pages: Your site is live at ..., 1 Visit site">
+        </li>
+        <li>
+          <p><strong>Paste the sheet script.</strong> On the checklist, click <strong>Copy the sheet script</strong>. In the sheet: <strong>Extensions</strong> (menu bar) → <strong>Apps Script</strong>; it opens in a new tab.</p>
+          <img src="setup/extensions.svg" width="620" alt="Google Sheets menu bar: 1 Extensions, 2 Apps Script">
+          <p>Click inside the code, select all (Ctrl+A, Mac ⌘A), paste (Ctrl+V, Mac ⌘V), and click <strong>Save</strong> (the disk icon above the code). Leave this tab open for step 9.</p>
+          <img src="setup/editor.svg" width="620" alt="The Apps Script editor: 1 replace the code, 2 Save">
+        </li>
+        <li>
+          <p><strong>Set up the sheet.</strong> Go back to the sheet’s tab and <strong>reload it</strong> (the browser’s reload button). ⏳ After 5–10 seconds a <strong>Climate Organization Map</strong> menu appears at the end of the menu bar. Click it → <strong>Set up sheet + forms (run once)</strong>.</p>
+          <img src="setup/menu.svg" width="620" alt="1 the Climate Organization Map menu after Help, 2 Set up sheet + forms">
+          <p>Google asks for permission: <strong>OK</strong> → choose your account → “Google hasn’t verified this app”: <strong>Advanced</strong> → <strong>Go to Untitled project (unsafe)</strong> → tick <strong>Select all</strong> → <strong>Continue</strong>. (It’s your own script; “unverified” only means Google hasn’t reviewed it.) Tick <strong>Select all</strong>: without every permission, setup fails partway.</p>
+          <img src="setup/permissions.svg" width="700" alt="1 OK, 2 Advanced, 3 Go to Untitled project (unsafe), 4 Select all, 5 Continue">
+          <p>If nothing happens after <strong>Continue</strong>, click <strong>Set up sheet + forms</strong> again. It then asks two things: your map’s address (<code>https://&lt;your-github-name&gt;.github.io/&lt;repo-name&gt;/</code>, also shown at the top of the checklist) → <strong>OK</strong>; and your core team’s emails, separated by commas (blank = just you) → <strong>OK</strong>.</p>
+          <p>⏳ <strong>Then don’t touch anything for 1–3 minutes.</strong> The script works on its own: a “Running script” box shows at the top, and tabs and forms appear one by one. It’s done when a popup says “Built and shared with the core team…”: click <strong>OK</strong>.</p>
+        </li>
+        <li>
+          <p><strong>Publish the sheet’s data.</strong> In the <strong>Apps Script</strong> tab: <strong>Deploy</strong> (blue, top right) → <strong>New deployment</strong> → click the <strong>gear</strong> next to “Select type” → <strong>Web app</strong>. Set <strong>Execute as: Me</strong> and <strong>Who has access: Anyone</strong>, click <strong>Deploy</strong>. If it shows <strong>Authorize access</strong>, click it and allow everything as in step 8 (OK, Advanced, Go to …, Select all, Continue).</p>
+          <img src="setup/deploy.svg" width="700" alt="1 Deploy, 2 New deployment, 3 the gear, 4 Web app, 5 Execute as Me, 6 Who has access Anyone, 7 Deploy">
+          <p>Click <strong>Copy</strong> under <strong>Web app URL</strong> (it ends in <code>/exec</code>), then <strong>Done</strong>.</p>
+          <img src="setup/deploy-url.svg" width="620" alt="Deployment successfully created: 1 Copy the web app URL">
+        </li>
+      </ol>
+    </div>
+
+    <h3 id="back-on-github">Back on GitHub <span class="time">(about 1 minute)</span></h3>
+
+    <div class="prose">
+      <ol start="10">
+        <li>
+          <p><strong>Connect the map to the sheet.</strong> Edit <code>map.config.ts</code> again (pencil, as in step 4): paste the URL between the quotes of <code>dataUrl: ""</code>. <strong>Commit changes…</strong> → <strong>Commit directly to the main branch</strong> → <strong>Commit changes</strong>. ⏳ After the build (about 2 minutes), reload the checklist: every step is green.</p>
+        </li>
+        <li>
+          <p><strong>Try it.</strong> Open your map, press <strong>+</strong>, and add your first group. ⏳ It shows on the map about a minute after you submit (reload the map). Delete test rows in the sheet when you’re done.</p>
+        </li>
+      </ol>
+
+      <p class="note">That’s it: approved form submissions show on the map within a minute, and a backup of the data is saved into the repo every night.</p>
+    </div>
+
+    <h2 id="config">What <code>map.config.ts</code> sets</h2>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Setting</th><th scope="col">What it’s for</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><code>title</code></th><td>The map’s name: page title, top bar, form titles, emails, the sheet’s menu</td></tr>
+          <tr><th scope="row"><code>state</code></th><td>Two-letter code. Fills in where the geographic map opens, the main city (where a group with no address yet is placed), the time zone and the state name</td></tr>
+          <tr><th scope="row"><code>landAcknowledgement</code></th><td>Shown on the loading screen and under “Land acknowledgement” in the menu</td></tr>
+          <tr><th scope="row"><code>dataUrl</code></th><td>The sheet’s web app URL (step 9)</td></tr>
+          <tr><th scope="row">optional</th><td><code>shortTitle</code>, <code>timeZone</code>, <code>bounds</code>, <code>fallback</code>, <code>exampleTowns</code>, <code>exampleOrgs</code>, <code>geo</code> (see <a href="https://github.com/turibiusrozario-tutorials/template.climateorgmap.earth/blob/main/src/map-config.ts"><code>src/map-config.ts</code></a>)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>The sheet reads the name and state from your site, and the site reads the forms from the sheet, so nothing else is copied by hand.</p>
+    </div>
+
+    <h2 id="updates">Get updates</h2>
+
+    <div class="prose">
+      <ol>
+        <li>On your fork’s GitHub page: <strong>Sync fork → Update branch</strong>. The template never changes <code>map.config.ts</code>, your data or your logos, so this doesn’t conflict. Don’t edit the template’s other files in your copy.</li>
+        <li>Open your <code>setup.html</code>. If <strong>Sheet script up to date</strong> isn’t green: copy the script again, paste it over <code>Code.gs</code>, <strong>Save</strong>, then <strong>Deploy → Manage deployments → ✏️ → Version: New version → Deploy</strong> (the URL stays the same), and run <strong>Update the forms</strong> from the sheet’s menu.</li>
+      </ol>
+    </div>
+
+    <h2 id="address">Get a climateorgmap.earth address</h2>
+
+    <div class="prose">
+      <p>Maps can have an address like <code>wi.climateorgmap.earth</code>. To get one:</p>
+      <ol>
+        <li><strong>Request:</strong> fill in the <a href="https://forms.gle/1gS3FvUfXBEd3iXr6">subdomain request form</a>.</li>
+        <li><strong>Wait for next steps.</strong> We’ll reply with what to do. Until then, leave your fork’s <strong>Custom domain</strong> setting empty.</li>
+      </ol>
+      <p>If a map shuts down, its DNS record is removed so the address can’t be taken over.</p>
+    </div>
+
+    <h2 id="owners">Who owns what</h2>
+
+    <div class="prose">
+      <ul>
+        <li>The sheet’s script and web app run as the Google account that set them up. If that account closes, the forms stop recording and the map stops updating. Use a shared team account, or write down who takes over.</li>
+        <li>The fork belongs to whoever made it: add a second maintainer (<strong>Settings → Collaborators</strong>).</li>
+        <li>Share the sheet only with your core team. Point people never open it: they use the forms. On the sheet’s <strong>Editors</strong> tab, give each group’s point person (up to three) the group’s id.</li>
+      </ul>
+    </div>
+
+    <h2 id="how">How it works</h2>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Piece</th><th scope="col">What it does</th><th scope="col">Where it lives</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">The website</th><td>The map people look at. Never changes data itself.</td><td>Your fork, published by GitHub Pages (<code>.github/workflows/pages.yml</code>)</td></tr>
+          <tr><th scope="row">The Google Sheet</th><td>The source of truth: every coalition, group, event, project and action, and who may edit each.</td><td>Your Google Drive</td></tr>
+          <tr><th scope="row">Google Forms</th><td>How point people add and fix their group’s information (Google sign-in; others wait in <strong>Needs Review</strong>).</td><td>Built by the sheet’s script (<code>apps-script/Code.gs</code>)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>The sheet’s web app publishes only public tabs (never Editors, Needs Review, Feedback or Change Log), plus the forms’ links. The site falls back to <code>public/data.json</code> (the nightly backup, <code>.github/workflows/sync-data.yml</code>) when Google is unreachable. More on the sheet: <a href="https://github.com/turibiusrozario-tutorials/template.climateorgmap.earth/blob/main/apps-script/SETUP.md"><code>apps-script/SETUP.md</code></a>.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>This guide follows the <a href="https://github.com/turibiusrozario-tutorials/template.climateorgmap.earth">template’s README</a>, tested 2026-11-01. If a step differs from what you see, the README is the more current source.</p>
+      <p><a href="../">All maps</a> · <a href="https://github.com/turibiusrozario/climateorgmap.earth">Source on GitHub</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+      var root = document.documentElement;
+      var prefs = { theme: "system", text: "normal", space: "normal" };
+      try { Object.assign(prefs, JSON.parse(localStorage.getItem("com.prefs") || "{}")); } catch (e) {}
+
+      function applyPrefs() {
+        if (prefs.theme === "light" || prefs.theme === "dark") root.dataset.theme = prefs.theme;
+        else delete root.dataset.theme;
+        if (prefs.text === "large") root.dataset.text = "large"; else delete root.dataset.text;
+        if (prefs.space === "large") root.dataset.space = "large"; else delete root.dataset.space;
+      }
+      document.querySelectorAll(".settings input[type=radio]").forEach(function (input) {
+        input.checked = prefs[input.name] === input.value;
+        input.addEventListener("change", function () {
+          prefs[input.name] = input.value;
+          applyPrefs();
+          try { localStorage.setItem("com.prefs", JSON.stringify(prefs)); } catch (e) {}
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

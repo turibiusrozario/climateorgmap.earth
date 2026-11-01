@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-label="GitHub: the pencil icon edits a file">
+<rect x="0.5" y="0.5" width="719" height="249" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+<text x="24" y="38" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="600" fill="#1f2328" text-anchor="start">wi-climate-map / map.config.ts</text>
+<rect x="24" y="56" width="672" height="170" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1"/>
+<rect x="24" y="56" width="672" height="42" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="40" y="82" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#59636e" text-anchor="start">Code    Blame    27 lines · 1.3 KB</text>
+<rect x="470" y="62" width="52" height="30" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="496.0" y="81.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">Raw</text>
+<rect x="528" y="62" width="34" height="30" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="545.0" y="81.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">⧉</text>
+<rect x="568" y="62" width="34" height="30" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="585.0" y="81.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">⤓</text>
+<rect x="612" y="62" width="50" height="30" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1"/>
+<path d="M622 83 l2 -5 l8 -8 l3 3 l-8 8 z M630 72 l3 3" fill="none" stroke="#1f2328" stroke-width="1.6" stroke-linejoin="round"/>
+<text x="646" y="82" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#59636e" text-anchor="start">▾</text>
+<rect x="606" y="56" width="62" height="42" rx="8" fill="none" stroke="#d9480f" stroke-width="3"/>
+<text x="606" y="47" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#d9480f" text-anchor="start">Edit this file</text>
+<text x="40" y="124" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8c959f" text-anchor="start" xml:space="preserve"> 6</text>
+<text x="70" y="124" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" font-weight="400" fill="#1f2328" text-anchor="start" xml:space="preserve">export default {</text>
+<text x="40" y="144" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8c959f" text-anchor="start" xml:space="preserve"> 7</text>
+<text x="70" y="144" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" font-weight="400" fill="#1f2328" text-anchor="start" xml:space="preserve">  title: "Your State Climate Organization Map",</text>
+<text x="40" y="164" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8c959f" text-anchor="start" xml:space="preserve"> 8</text>
+<text x="70" y="164" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" font-weight="400" fill="#1f2328" text-anchor="start" xml:space="preserve">  state: "",</text>
+<text x="40" y="184" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8c959f" text-anchor="start" xml:space="preserve"> 9</text>
+<text x="70" y="184" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" font-weight="400" fill="#1f2328" text-anchor="start" xml:space="preserve">  landAcknowledgement: `</text>
+<text x="40" y="204" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8c959f" text-anchor="start" xml:space="preserve">10</text>
+<text x="70" y="204" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" font-weight="400" fill="#1f2328" text-anchor="start" xml:space="preserve">[Write your land acknowledgement here …]</text>
+<circle cx="606" cy="56" r="11" fill="#d9480f"/><text x="606" y="60.5" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+<text x="708" y="241" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" fill="#8c959f" text-anchor="end">Simplified drawing, not a screenshot</text>
+</svg>

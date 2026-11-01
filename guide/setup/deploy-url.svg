@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 210" width="720" height="210" role="img" aria-label="Apps Script: copy the Web app URL">
+<rect x="0.5" y="0.5" width="719" height="209" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+<text x="24" y="44" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#1f2328" text-anchor="start">New deployment</text>
+<text x="24" y="76" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="600" fill="#1f883d" text-anchor="start">Deployment successfully created.</text>
+<text x="24" y="108" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328" text-anchor="start">Web app</text>
+<text x="24" y="132" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">URL</text>
+<rect x="24" y="140" width="520" height="30" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+<text x="34" y="160" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" font-weight="400" fill="#1f2328" text-anchor="start" xml:space="preserve">https://script.google.com/macros/s/AKfy…/exec</text>
+<rect x="556" y="140" width="69.68" height="30" rx="6" fill="#fff" stroke="#fff" stroke-width="1"/>
+<text x="590.84" y="159.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1a73e8" text-anchor="middle">⧉ Copy</text>
+<rect x="550" y="134" width="81.68" height="42" rx="8" fill="none" stroke="#d9480f" stroke-width="3"/>
+<rect x="640" y="140" width="60" height="30" rx="6" fill="#1a73e8" stroke="#1a73e8" stroke-width="1"/>
+<text x="670.0" y="159.68" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#fff" text-anchor="middle">Done</text>
+<text x="24" y="194" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#d9480f" text-anchor="start">Paste this into map.config.ts as dataUrl.</text>
+<circle cx="550" cy="134" r="11" fill="#d9480f"/><text x="550" y="138.5" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+<text x="708" y="201" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" fill="#8c959f" text-anchor="end">Simplified drawing, not a screenshot</text>
+</svg>

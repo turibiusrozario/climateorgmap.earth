@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-08T11:57:53Z",
+  "generated_at": "2026-11-09T13:57:17Z",
   "maps": {
     "ma": {
-      "checked_at": "2026-11-08T11:57:53Z",
+      "checked_at": "2026-11-09T13:57:17Z",
       "site": {
         "ok": true,
         "http": 200
@@ -17,8 +17,8 @@
       "projects": 156,
       "actions": 68,
       "last_updated": "2026-10-14T21:40:44.995Z",
-      "feed_generated_at": "2026-11-08T11:57:59.947Z",
-      "counts_as_of": "2026-11-08T11:57:53Z",
+      "feed_generated_at": "2026-11-09T13:57:22.918Z",
+      "counts_as_of": "2026-11-09T13:57:17Z",
       "health": "up"
     }
   }

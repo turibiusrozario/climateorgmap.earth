@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-17T14:30:00Z",
+  "generated_at": "2026-11-18T14:05:59Z",
   "maps": {
     "ma": {
-      "checked_at": "2026-11-17T14:30:00Z",
+      "checked_at": "2026-11-18T14:05:59Z",
       "site": {
         "ok": true,
         "http": 200
@@ -11,14 +11,14 @@
         "ok": true
       },
       "source": "feed",
-      "organizations": 150,
+      "organizations": 155,
       "coalitions": 8,
       "events": 121,
-      "projects": 156,
+      "projects": 155,
       "actions": 68,
-      "last_updated": "2026-10-14T21:40:44.995Z",
-      "feed_generated_at": "2026-11-17T14:30:05.212Z",
-      "counts_as_of": "2026-11-17T14:30:00Z",
+      "last_updated": "2026-11-18T00:50:00.000Z",
+      "feed_generated_at": "2026-11-18T14:06:05.881Z",
+      "counts_as_of": "2026-11-18T14:05:59Z",
       "health": "up"
     }
   }
